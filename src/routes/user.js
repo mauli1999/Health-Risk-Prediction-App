@@ -41,7 +41,7 @@ userRoutes.post('/register', async (req, res) => {
         user.token = token;
         user.password = undefined;
 
-        res.status(201).json(user);
+        res.status(200).json(user);
         }
 
     catch(error){

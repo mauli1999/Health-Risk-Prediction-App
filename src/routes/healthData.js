@@ -1,4 +1,3 @@
-
 import express from 'express';
 import healthDataModel from '../models/healthData.models.js';
 import verifyToken from '../middlewares/verifyToken.js';
@@ -37,7 +36,7 @@ healthDataRoutes.post('/add', verifyToken, async (req, res) => {
             user: userId
         });
 
-        res.status(201).send("Health data added successfully.");
+        res.status(200).send("Health data added successfully.");
 
     }catch(error){
         res.status(500).send('Internal server error');
@@ -56,9 +55,21 @@ healthDataRoutes.get('/predict', verifyToken , async (req, res) => {
         const {pregnancies, glucose, bloodPressure, skinThickness, insulin, bmi, diabetesPedigreeFunction, age} = userHealthData.healthData;
 
 
-        const inputData = [pregnancies, glucose, bloodPressure, skinThickness, insulin, bmi, diabetesPedigreeFunction, age];
+        const inputData = {
+            pregnancies, 
+            glucose, 
+            bloodPressure, 
+            skinThickness, 
+            insulin, 
+            bmi, 
+            diabetesPedigreeFunction, 
+            age
+        };
+
+        console.log(inputData);  // Before sending to Flask
 
         const response = await axios.post('http://localhost:3001/predict', inputData);
+        console.log(response);
         const prediction = response.data.prediction;
 
         userHealthData.prediction = prediction;

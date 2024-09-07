@@ -4,6 +4,7 @@ import numpy as np
 import joblib
 
 
+
 app = Flask(__name__)
 
 # Load the model
@@ -13,6 +14,11 @@ model = joblib.load('model.pkl')
 @app.route('/predict', methods=['POST'])
 def predict():
     data = request.json
+    print(f"Received data: {data}")
+    
+    if not all(key in data for key in ['pregnancies', 'glucose', 'bloodPressure', 'skinThickness', 'insulin', 'bmi', 'diabetesPedigreeFunction', 'age']):
+        return jsonify({'error': 'Invalid input format, expected JSON dictionary'}), 400
+    
     input_data = [data['pregnancies'], data['glucose'], data['bloodPressure'], data['skinThickness'], data['insulin'], data['bmi'], data['diabetesPedigreeFunction'], data['age']]
     input_array = np.array(input_data).reshape(1, -1)
     
