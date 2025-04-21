@@ -29,7 +29,7 @@ app.get('/', (req, res) => {
 });
 
 const db = 'Health_Prediction_App';
-mongoose.connect(`mongodb+srv://mauli:mauli1999@dss.qio7llt.mongodb.net/${db}`, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(`mongodb+srv://****:*******@*********.mongodb.net/${db}`, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('MongoDB connected'))
     .catch(err => console.error('MongoDB connection error:', err));
 
